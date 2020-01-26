@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a072f523-b5ef-4ec7-a716-e756eeb40732" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="1WO6BhvjF8PvJUzMvhMBUkrjvRU" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RunManager" selected="JUnit.ShiftRegisterTest.testShift1">
+    <configuration name="ShiftRegisterTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="solutions" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ShiftRegisterTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShiftRegisterTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="solutions" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ShiftRegisterTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShiftRegisterTest.testGenerate1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="solutions" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ShiftRegisterTest" />
+      <option name="METHOD_NAME" value="testGenerate1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShiftRegisterTest.testShift1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="solutions" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ShiftRegisterTest" />
+      <option name="METHOD_NAME" value="testShift1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShiftRegisterTest.testZeroOneBalance" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="solutions" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ShiftRegisterTest" />
+      <option name="METHOD_NAME" value="testZeroOneBalance" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.ShiftRegisterTest.testShift1" />
+        <item itemvalue="JUnit.ShiftRegisterTest" />
+        <item itemvalue="Android JUnit.ShiftRegisterTest" />
+        <item itemvalue="JUnit.ShiftRegisterTest.testGenerate1" />
+        <item itemvalue="JUnit.ShiftRegisterTest.testZeroOneBalance" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a072f523-b5ef-4ec7-a716-e756eeb40732" name="Default Changelist" comment="" />
+      <created>1579008159788</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1579008159788</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="552" y="253" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579057999031">
+      <screen x="0" y="0" width="2194" height="1194" />
+    </state>
+    <state x="552" y="253" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2194.1194@0.0.2194.1194" timestamp="1579057999031" />
+    <state x="54" y="53" width="1172" height="575" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1579428276429">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="54" y="53" width="1172" height="575" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.1280.680@0.0.1280.680" timestamp="1579428276429" />
+    <state x="93" y="93" width="2008" height="1008" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.2194.1194@0.0.2194.1194" timestamp="1579063407780" />
+    <state x="949" y="487" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1579008303550">
+      <screen x="0" y="0" width="2194" height="1194" />
+    </state>
+    <state x="949" y="487" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.2194.1194@0.0.2194.1194" timestamp="1579008303550" />
+    <state x="468" y="193" key="FileChooserDialogImpl" timestamp="1579427840487">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="468" y="193" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1579427840487" />
+    <state x="802" y="340" key="FileChooserDialogImpl/0.0.2194.1194@0.0.2194.1194" timestamp="1579070298785" />
+    <state width="1237" height="138" key="GridCell.Tab.0.bottom" timestamp="1579429788655">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="138" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1579429788655" />
+    <state width="2151" height="333" key="GridCell.Tab.0.bottom/0.0.2194.1194@0.0.2194.1194" timestamp="1579089141760" />
+    <state width="1237" height="138" key="GridCell.Tab.0.center" timestamp="1579429788654">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="138" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1579429788654" />
+    <state width="2151" height="333" key="GridCell.Tab.0.center/0.0.2194.1194@0.0.2194.1194" timestamp="1579089141760" />
+    <state width="1237" height="138" key="GridCell.Tab.0.left" timestamp="1579429788654">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="138" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1579429788654" />
+    <state width="2151" height="333" key="GridCell.Tab.0.left/0.0.2194.1194@0.0.2194.1194" timestamp="1579089141760" />
+    <state width="1237" height="138" key="GridCell.Tab.0.right" timestamp="1579429788655">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="138" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1579429788655" />
+    <state width="2151" height="333" key="GridCell.Tab.0.right/0.0.2194.1194@0.0.2194.1194" timestamp="1579089141760" />
+    <state width="2151" height="409" key="GridCell.Tab.1.bottom" timestamp="1579063080399">
+      <screen x="0" y="0" width="2194" height="1194" />
+    </state>
+    <state width="2151" height="409" key="GridCell.Tab.1.bottom/0.0.2194.1194@0.0.2194.1194" timestamp="1579063080399" />
+    <state width="2151" height="409" key="GridCell.Tab.1.center" timestamp="1579063080399">
+      <screen x="0" y="0" width="2194" height="1194" />
+    </state>
+    <state width="2151" height="409" key="GridCell.Tab.1.center/0.0.2194.1194@0.0.2194.1194" timestamp="1579063080399" />
+    <state width="2151" height="409" key="GridCell.Tab.1.left" timestamp="1579063080399">
+      <screen x="0" y="0" width="2194" height="1194" />
+    </state>
+    <state width="2151" height="409" key="GridCell.Tab.1.left/0.0.2194.1194@0.0.2194.1194" timestamp="1579063080399" />
+    <state width="2151" height="409" key="GridCell.Tab.1.right" timestamp="1579063080399">
+      <screen x="0" y="0" width="2194" height="1194" />
+    </state>
+    <state width="2151" height="409" key="GridCell.Tab.1.right/0.0.2194.1194@0.0.2194.1194" timestamp="1579063080399" />
+    <state x="578" y="173" key="SettingsEditor" timestamp="1579059297878">
+      <screen x="0" y="0" width="2194" height="1194" />
+    </state>
+    <state x="578" y="173" key="SettingsEditor/0.0.2194.1194@0.0.2194.1194" timestamp="1579059297878" />
+    <state x="793" y="423" key="com.intellij.ide.util.TipDialog" timestamp="1579449051815">
+      <screen x="0" y="0" width="2194" height="1194" />
+    </state>
+    <state x="463" y="241" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1579427732142" />
+    <state x="793" y="423" key="com.intellij.ide.util.TipDialog/0.0.2194.1194@0.0.2194.1194" timestamp="1579449051815" />
+    <state x="823" y="492" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1579058763822">
+      <screen x="0" y="0" width="2194" height="1194" />
+    </state>
+    <state x="823" y="492" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.2194.1194@0.0.2194.1194" timestamp="1579058763822" />
+    <state x="258" y="18" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1579429044061">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="258" y="18" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1280.680@0.0.1280.680" timestamp="1579429044061" />
+  </component>
+</project>

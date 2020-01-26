@@ -1,0 +1,150 @@
+///////////////////////////////////
+// This is the main shift register class.
+// Notice that it implements the ILFShiftRegister interface.
+// You will need to fill in the functionality.
+///////////////////////////////////
+
+import java.util.Arrays;
+
+/**
+ * class ShiftRegister
+ * @author
+ * Description: implements the ILFShiftRegister interface.
+ */
+public class ShiftRegister implements ILFShiftRegister {
+    ///////////////////////////////////
+    // Create your class variables here
+    int[] register;
+    int size, tap, offset=0;
+    ///////////////////////////////////
+    // TODO:
+
+    ///////////////////////////////////
+    // Create your constructor here:
+    ///////////////////////////////////
+    public ShiftRegister(int size, int tap) {
+        if(size<1){
+            throw new IllegalArgumentException("size must be at least 1");
+        }
+        if(tap<0 || tap >= size){
+            throw new IllegalArgumentException("tap must be between 0 and (size-1) inclusive");
+        }
+        this.size = size;
+        this.tap = tap;
+    }
+
+    ///////////////////////////////////
+    // Create your class methods here:
+    ///////////////////////////////////
+    public String toString(){
+        char[] representation = new char[size];
+        for(int i = 0; i<size; i++){
+            representation[i] = register[Math.floorMod(i-offset,size)]>0 ? '1' : '0';
+        }
+        return new String(representation);
+    }
+
+    /**
+     * setSeed
+     * @param seed
+     * Description:
+     */
+    @Override
+    public void setSeed(int[] seed) {
+        if(seed.length != size){
+            throw new IllegalArgumentException("size of seed does not match size of register");
+        }
+        for(int i = 0; i<size; i++){
+            if(seed[i] != 0 && seed[i] != 1){
+                throw new IllegalArgumentException("seed contains value that is not 0 or 1");
+            }
+        }
+        register = seed.clone();
+    }
+
+
+    private int[] hashString(String s, int length){
+        int[] seed = new int[length];
+        int hash = s.hashCode();
+        //System.out.print(hash);
+        while(length-->0){
+            seed[length] = (hash >> length) % 2; //set kth bit
+        }
+        return seed;
+    }
+
+    public void setSeedString(String seedString) {
+        int[] seed = hashString(seedString, size);
+        register = seed.clone();
+    }
+    /**
+     * shift
+     * @return
+     * Description:
+     */
+    @Override
+    public int shift() {
+        int feedback = register[Math.floorMod(-1-offset,size)] ^ register[Math.floorMod(tap-offset,size)]; //feedback bit is calculated as the XOR of the most significant bit and the tap bit.
+        offset++; //The most significant bit is dropped; Every bit is moved one slot to the left
+        register[Math.floorMod(0-offset,size)] = feedback; //The least significant bit is set to the feedback bit.
+        //steps can be reordered for slightly improved performance
+        return feedback;
+    }
+    
+    public int getBit(int n){
+        return register[Math.floorMod(n-offset,size)];
+    }
+
+    /**
+     * generate
+     * @param k
+     * @return
+     * Description:
+     */
+    @Override
+    public int generate(int k) {
+        int out = 0;
+        int[] bits = new int[k];
+        while(k-->0){
+            bits[k] = shift(); //why???
+            out |= bits[k] << k; //set kth bit
+        }
+        return out;
+    }
+
+    /**
+     * Returns the integer representation for a binary int array.
+     * @param array
+     * @return
+     */
+    private int toBinary(int[] array) {
+        int out = 0;
+        int k = array.length;
+        while(k-->0){
+            out |= array[k] << k; //set kth bit
+        }
+        return out;
+    }
+    /*
+    Q7d
+    only taps corresponding to primitive polynomials will explore the full state space of the register. having tap = size-1 results in all 0s
+
+    @Test
+    public void testZeroOneBalance() {
+        ILFShiftRegister r = getRegister(15, 13);
+        r.setSeedString("TheCowJumpedOverTheMoo");
+        int iter = 10000, c0 = 0, c1 = 0;
+        while(iter-->0){
+            if(r.shift()==0) {
+                c0++;
+            }
+        }
+        System.out.print("0s : " + c0);
+        System.out.print("\n1s : " + (10000 - c0));
+    }
+    Output:
+    0s : 4967
+    1s : 5033
+    within 95% CI
+     */
+}
