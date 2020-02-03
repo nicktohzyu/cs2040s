@@ -19,7 +19,7 @@
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../ps2" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -123,10 +123,10 @@
       <screen x="0" y="0" width="2194" height="1194" />
     </state>
     <state x="949" y="487" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.2194.1194@0.0.2194.1194" timestamp="1579008303550" />
-    <state x="468" y="193" key="FileChooserDialogImpl" timestamp="1579427840487">
+    <state x="468" y="193" key="FileChooserDialogImpl" timestamp="1579870361220">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="468" y="193" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1579427840487" />
+    <state x="468" y="193" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1579870361220" />
     <state x="802" y="340" key="FileChooserDialogImpl/0.0.2194.1194@0.0.2194.1194" timestamp="1579070298785" />
     <state width="2151" height="284" key="GridCell.Tab.0.bottom" timestamp="1579449520759">
       <screen x="0" y="0" width="2194" height="1194" />
@@ -168,10 +168,10 @@
       <screen x="0" y="0" width="2194" height="1194" />
     </state>
     <state x="578" y="173" key="SettingsEditor/0.0.2194.1194@0.0.2194.1194" timestamp="1579059297878" />
-    <state x="793" y="423" key="com.intellij.ide.util.TipDialog" timestamp="1579449051815">
-      <screen x="0" y="0" width="2194" height="1194" />
+    <state x="463" y="241" key="com.intellij.ide.util.TipDialog" timestamp="1579870341432">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="463" y="241" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1579427732142" />
+    <state x="463" y="241" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1579870341432" />
     <state x="793" y="423" key="com.intellij.ide.util.TipDialog/0.0.2194.1194@0.0.2194.1194" timestamp="1579449051815" />
     <state x="823" y="492" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1579058763822">
       <screen x="0" y="0" width="2194" height="1194" />
