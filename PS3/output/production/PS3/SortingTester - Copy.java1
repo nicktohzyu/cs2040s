@@ -1,0 +1,143 @@
+public class SortingTester {
+
+
+    public static boolean checkSort(ISort sorter, int size) {
+		KeyValuePair[] testArray = new KeyValuePair[size];
+        for(int i = 0; i<size; i++){
+			testArray[i] = new KeyValuePair(size-i-1, 0);
+		}
+        sorter.sort(testArray);
+		for(int i = 0; i<size; i++){
+			if(testArray[i].getKey() != i) {
+				return false;
+			}
+		}
+        return true;
+    }
+
+    public static boolean isStable(ISort sorter, int size) {
+		KeyValuePair[] testArray = new KeyValuePair[size];
+		if(size<2){
+			return true;
+		}
+		int iter = 100;
+		while(iter -- > 0) {
+			for (int i = 0; i < size; i++) {
+				testArray[i] = new KeyValuePair(1, i);
+			}
+			testArray[size-1] = new KeyValuePair(0, 0);
+			sorter.sort(testArray);
+//			for (int i = 0; i < size; i++) {
+//				System.out.println(testArray[i]);
+//			}
+			for (int i = 1; i < size; i++) {
+				if (testArray[i].getValue() != i-1) {
+					return false;
+				}
+			}
+
+			for (int i = 0; i < size; i++) {
+				testArray[i] = new KeyValuePair(1, i);
+			}
+			testArray[0] = new KeyValuePair(2, 0);
+			sorter.sort(testArray);
+//			for (int i = 0; i < size; i++) {
+//				System.out.println(testArray[i]);
+//			}
+			for (int i = 1; i < size - 1; i++) {
+				if (testArray[i].getValue() != i + 1) {
+					return false;
+				}
+			}
+		}
+		return true;
+    }
+
+	public static float checkComplexity1(ISort sorter, int size) { //maximally deranged, differentiate insertion and merge sort
+		StopWatch watch = new StopWatch();
+		float time1, time2;
+		KeyValuePair[] testArray = new KeyValuePair[size];
+		for(int i = 0; i<size; i++){
+			testArray[i] = new KeyValuePair(size-i, 0);
+		}
+		watch.start();
+		sorter.sort(testArray);
+		watch.stop();
+		time1 = watch.getTime();
+
+		watch.reset();
+		testArray = new KeyValuePair[size*3];
+		for(int i = 0; i<size*3; i++){
+			testArray[i] = new KeyValuePair(size*3-i, 0);
+		}
+		watch.start();
+		sorter.sort(testArray);
+		watch.stop();
+		time2 = watch.getTime();
+//		System.out.println(time1 + ", " + time2);
+		return time2/time1;
+	}
+
+	public static float checkComplexity2(ISort sorter, int size) { //minimally deranged, differentiate insertion and bubble sort
+		StopWatch watch = new StopWatch();
+		float time1, time2;
+		KeyValuePair[] testArray = new KeyValuePair[size];
+		for(int i = 0; i<size; i++){
+			testArray[i] = new KeyValuePair(0, 0);
+		}
+		testArray[size/2 - 1] = new KeyValuePair(-1, 0);
+		testArray[size/2] = new KeyValuePair(1, 0);
+		watch.start();
+		sorter.sort(testArray);
+		watch.stop();
+		time1 = watch.getTime();
+
+		watch.reset();
+		size *= 3;
+		testArray = new KeyValuePair[size];
+		for(int i = 0; i<size; i++){
+			testArray[i] = new KeyValuePair(0, 0);
+		}
+		testArray[size/2 - 1] = new KeyValuePair(-1, 0);
+		testArray[size/2] = new KeyValuePair(1, 0);
+		watch.start();
+		sorter.sort(testArray);
+		watch.stop();
+		time2 = watch.getTime();
+//		System.out.println(time1 + ", " + time2);
+		return time2/time1;
+	}
+
+    public static void main(String[] args) {
+		System.out.println("checkSort A: " + checkSort(new SorterA(), 2));
+		System.out.println("checkSort B: " + checkSort(new SorterB(), 2));
+		System.out.println("checkSort C: " + checkSort(new SorterC(), 2)); //false
+		System.out.println("checkSort D: " + checkSort(new SorterD(), 2));
+		System.out.println("checkSort E: " + checkSort(new SorterE(), 2));
+		System.out.println("checkSort F: " + checkSort(new SorterF(), 2));
+
+		System.out.println("\nisStable A: " + isStable(new SorterA(), 10)); //false
+		System.out.println("isStable B: " + isStable(new SorterB(), 10));
+		System.out.println("isStable D: " + isStable(new SorterD(), 10)); //false
+		System.out.println("isStable E: " + isStable(new SorterE(), 10));
+		System.out.println("isStable F: " + isStable(new SorterF(), 10));
+
+		System.out.println("\ncheckComplexity1 A: " + checkComplexity1(new SorterA(), 50000)); //~3
+		System.out.println("checkComplexity1 B: " + checkComplexity1(new SorterB(), 10000)); //~9
+		System.out.println("checkComplexity1 D: " + checkComplexity1(new SorterD(), 10000)); //~9
+		System.out.println("checkComplexity1 E: " + checkComplexity1(new SorterE(), 10000)); //~3
+		System.out.println("checkComplexity1 F: " + checkComplexity1(new SorterF(), 500)); //~9, very slow
+		
+		System.out.println("\ncheckComplexity2 B: " + checkComplexity2(new SorterB(), 100000)); //~3
+		System.out.println("checkComplexity2 F: " + checkComplexity2(new SorterF(), 500)); //~9, very slow
+
+		/*
+		A: unstable, maximal deranged growth ~ n: quicksort
+		B: stable, maximal deranged growth ~ n^2, minimal deranged growth ~ n: insertion
+		C: Dr. Evil
+		D: unstable, maximal deranged growth ~ n^2: selection
+		E: stable, maximal deranged growth ~ n: merge
+		F: stable, maximal deranged growth ~ n^2, minimal deranged growth ~ n^2: bubble
+		 */
+    }
+}
