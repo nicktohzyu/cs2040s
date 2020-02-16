@@ -1,4 +1,6 @@
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * A class to encapsulate the code tree
@@ -32,7 +34,7 @@ public class WeightedTree extends BTree implements ITree{
      */
     private void buildTree(HashMap<Byte, Integer> data){
 //        change hashmap to array
-        Pair dataArray[] = new Pair[]
+        Pair dataArray[] = new Pair[data.size()];
         Iterator it = data.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
