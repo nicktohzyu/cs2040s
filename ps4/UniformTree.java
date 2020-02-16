@@ -25,7 +25,10 @@ public class UniformTree extends BTree implements ITree {
      * @param datawords
      * @return
      */
-    private void buildTree(Byte[] datawords){}
+    private void buildTree(Byte[] datawords){
+        System.out.println(datawords);
+        throw new IllegalArgumentException(datawords.toString());
+    }
 
     /**
      * This function takes a code and looks it up in the tree.

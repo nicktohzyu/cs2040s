@@ -31,6 +31,10 @@ public abstract class BTree {
         public int compareTo(Pair other){
             return (data - other.data);
         }
+
+        public String toString(){
+            return "" + (char) data + " : " + weight;
+        }
     }
 
     // A class that encapsulates a tree node

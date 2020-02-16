@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -34,18 +35,28 @@ public class WeightedTree extends BTree implements ITree{
      */
     private void buildTree(HashMap<Byte, Integer> data){
 //        change hashmap to array
+        System.out.println(data);
         Pair dataArray[] = new Pair[data.size()];
-        Iterator it = data.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            System.out.println(pair.getKey() + " = " + pair.getValue());
-            it.remove(); // avoids a ConcurrentModificationException
+//        Iterator it = data.entrySet().iterator();
+//        while (it.hasNext()) {
+//            Map.Entry pair = (Map.Entry)it.next();
+//            System.out.println(pair.getKey() + " = " + pair.getValue());
+//            it.remove(); // avoids a ConcurrentModificationException
+//        }
+
+
+        int index = 0;
+        for (Map.Entry<Byte, Integer> mapEntry : data.entrySet()) {
+            dataArray[index] = new Pair(mapEntry.getKey(),  mapEntry.getValue());
+            index++;
         }
+        Arrays.sort(dataArray);
+        System.out.println(Arrays.toString(dataArray));
 //        sort data
 //        call tree building function
     }
 
-    private void createNode(HashMap<Byte, Integer> data, int left, int right, )
+//    private void createNode(HashMap<Byte, Integer> data, int left, int right, )
 
     /**
      * This function takes a code and looks it up in the tree.
