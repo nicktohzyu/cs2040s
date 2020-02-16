@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,7 +72,7 @@ public class WeightedTree extends BTree implements ITree {
 //        left child has nodes leftIndex to middle - 1 inclusive
 //        right child has nodes middle to rightIndex inclusive
         int low = leftIndex + 1; //left child will never be empty
-        int high = rightIndex; //
+        int high = rightIndex - 1; //
         while (low < high) {
             int middle = low + (high - low) / 2;
             if (prefixSumWeights[middle] - prefixSumWeights[leftIndex] < prefixSumWeights[rightIndex + 1] - prefixSumWeights[middle]) {
@@ -100,7 +101,8 @@ public class WeightedTree extends BTree implements ITree {
      * @return
      */
     public Byte query(boolean[] code, int bits) {
-        return null;
+        TreeNode node = root;
+        return node.data; //check if is leaf
     }
 
     /**
@@ -112,10 +114,24 @@ public class WeightedTree extends BTree implements ITree {
      */
     public boolean[] queryCode(byte key) {
         TreeNode node = root;
-        while(node.left != null || node.right != null) {
-
-        } else if()
-        return node.data == key;
+        ArrayList<Boolean> arrlist = new ArrayList<Boolean>();
+        while(node.left != null && node.right != null) { //is there a need to check both?
+//            System.out.println("explore tree: " + node.data + " " + key);
+            if(key > node.data){
+                arrlist.add(true);
+                node = node.right;
+            } else{
+                arrlist.add(false);
+                node = node.left;
+            }
+        }
+//        System.out.println(arrlist);
+        if(node.data != key){
+            return null;
+        }
+        boolean[] code = ArrayUtils.toPrimitive(arrlist.toArray(new Boolean[arrlist.size()]));
+        //convert arrlist to list
+        return code;
     }
 
 }

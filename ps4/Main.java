@@ -15,5 +15,6 @@ public class Main {
 
         WeightedTree tree = new WeightedTree(test);
         tree.printTree();
+        tree.queryCode((byte)'d');
     }
 }
