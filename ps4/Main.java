@@ -15,6 +15,7 @@ public class Main {
 
         WeightedTree tree = new WeightedTree(test);
         tree.printTree();
-        tree.queryCode((byte)'d');
+        boolean[] code = tree.queryCode((byte)'e');
+//        System.out.println((char) tree.query(code, code.length).byteValue());
     }
 }

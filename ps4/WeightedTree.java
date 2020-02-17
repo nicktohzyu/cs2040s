@@ -35,16 +35,16 @@ public class WeightedTree extends BTree implements ITree {
      * @param data
      * @return
      */
-    private void buildTree(HashMap<Byte, Integer> data) {
-//        change hashmap to array
+    private void buildTree(HashMap<Byte, Integer> data) { //createNode is called N times, hence complexity is O(n log n) where n is the size of the data (there may be a tighter average bound but sort is n log n anyway)
 //        System.out.println(data);
+//        change hashmap to array
         Pair[] dataArray = new Pair[data.size()];
         int index = 0;
         for (Map.Entry<Byte, Integer> mapEntry : data.entrySet()) {
             dataArray[index] = new Pair(mapEntry.getKey(), mapEntry.getValue());
             index++;
         }
-        Arrays.sort(dataArray);
+        Arrays.sort(dataArray); //O(n log n)
 //        System.out.println(Arrays.toString(dataArray));
         int prefixSumWeights[] = new int[dataArray.length + 1]; //ith index is sum of all weights to the left exclusive
         prefixSumWeights[0] = 0;
@@ -53,10 +53,9 @@ public class WeightedTree extends BTree implements ITree {
         }
 //        System.out.println(Arrays.toString(prefixSumWeights));
         root = createNode(dataArray, prefixSumWeights, 0, dataArray.length - 1);
-//        call tree building function
     }
 
-    private TreeNode createNode(Pair[] dataArray, int[] prefixSumWeights, int leftIndex, int rightIndex) { //indexes inclusive
+    private TreeNode createNode(Pair[] dataArray, int[] prefixSumWeights, int leftIndex, int rightIndex) { //indexes inclusive, takes at most O(log(right - left)), so at most O(log(size of array))
 //        System.out.println("create node: " + leftIndex + " " + rightIndex);
         int size = rightIndex - leftIndex + 1;
         if (size == 1) {
@@ -100,9 +99,19 @@ public class WeightedTree extends BTree implements ITree {
      * @param bits
      * @return
      */
-    public Byte query(boolean[] code, int bits) {
+    public Byte query(boolean[] code, int bits) { //in worst case has to check height of tree, expected O(log n) as tree is balanced by query probability
         TreeNode node = root;
-        return node.data; //check if is leaf
+        for (int i = 0; i < bits; i++) {
+            if (node.left == null && node.right == null) {
+                return null;
+            }
+            if (code[i]) {
+                node = node.right;
+            } else {
+                node = node.left;
+            }
+        }
+        return (node.left == null && node.right == null) ? node.data : null; //check if is leaf
     }
 
     /**
@@ -112,25 +121,28 @@ public class WeightedTree extends BTree implements ITree {
      * @param key
      * @return
      */
-    public boolean[] queryCode(byte key) {
+    public boolean[] queryCode(byte key) { //in worst case has to check height of tree, expected O(log n) as tree is balanced by query probability
         TreeNode node = root;
-        ArrayList<Boolean> arrlist = new ArrayList<Boolean>();
-        while(node.left != null && node.right != null) { //is there a need to check both?
+        ArrayList<Boolean> arrlist = new ArrayList<Boolean>(); //troublesome but saves space/time declaring overly large array
+        while (node.left != null && node.right != null) { //is there a need to check both?
 //            System.out.println("explore tree: " + node.data + " " + key);
-            if(key > node.data){
+            if (key > node.data) {
                 arrlist.add(true);
                 node = node.right;
-            } else{
+            } else {
                 arrlist.add(false);
                 node = node.left;
             }
         }
-//        System.out.println(arrlist);
-        if(node.data != key){
+        if (node.data != key) {
             return null;
         }
-        boolean[] code = ArrayUtils.toPrimitive(arrlist.toArray(new Boolean[arrlist.size()]));
-        //convert arrlist to list
+        boolean[] code = new boolean[arrlist.size()];
+        int i = 0;
+        for (Boolean b : arrlist) {
+            code[i++] = b.booleanValue();
+        }
+//        System.out.println(Arrays.toString(code));
         return code;
     }
 
