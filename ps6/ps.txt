@@ -1,0 +1,897 @@
+CS2040S: Data Structures and Algorithms
+ problem set 0 Overview. You have two basic tasks this week.
+Your first job this week is to set up your environment for writing programs in CS2040S. By
+the end of this problem set, you should be able to write simple Java programs.
+Your second job is to implement a linear feedback shift register. This is a simple data structure
+that can be used as part of a simple encryption schemes, or as a part of a pseudorandom
+number generator.
+For each problem, upload the Java files to Coursemology as individual files, and write any
+textual answers in the text box.
+Collaboration Policy. You are encouraged to work with other students on solving these problems. However, you must write up your solution by yourself. We may, randomly, ask you
+questions about your solution, and if you cannot answer them, we will assume you have cheated. In
+addition, when you write up your solution, you must list the names of every collaborator, that is,
+every other person that you talked to about the problem (even if you only discussed it briefly). You
+can do so in Coursemology by adding a Comment. Any deviation from this policy will be considered
+cheating, and will be punished severely, including referral to the NUS Board of Discipline.
+1
+Problem 1. (Getting up and running)
+In CS2040S, we will be writing programs in Java. We will be using IntelliJ as our basic development
+environment. IntelliJ is available as an open-source (Apache 2.0) Community version that has all
+the functionality needed for CS2040S, and runs on Windows, Macs, and Linux. It contains useful
+editing, debugging, and profiling tools. You can download it at:
+https://www.jetbrains.com/idea/download/
+Problem 1.a. Start IntelliJ and create a new Java project called ps1 for this problem. Choose
+Java version 11.0.5 for Project SDK. If you do not have the SDK, download it here. Inside the src
+folder, create a new Java class called Main.java (the name is case sensitive!). Within this class,
+create the following method:
+static int MysteryFunction(int argA, int argB) {
+int c = 1;
+int d = argA;
+int e = argB;
+while (e > 0) {
+if (2*(e/2) !=e) {
+c = c*d;
+}
+d = d*d;
+e = e/2;
+}
+return c;
+}
+Also, create the following main function:
+public static void main(String args[]) {
+int output = MysteryFunction(5, 5);
+System.out.printf("The answer is: " + output + ".");
+}
+Run your program. What is the answer output in your solution?
+Problem 1.b. (Optional.) What is MysteryFunction calculating? If you try a few examples,
+you might be able to guess.
+Problem 1.c. Create a 'Hello CS2040S!' program that is designed to introduce yourself to your
+tutor and name it HelloWorld.java. It can be as simple or complicated as you like. It should
+output (in some form):
+your name (as you prefer to be called),
+2
+your favorite algorithm or your favorite joke,
+a few sentences of additional information on your background and who you are (but nothing
+private that you would want kept secret from the rest of the class),
+the answer(s) to the previous parts.
+This HelloWorld.java file is the only part of this problem to submit.
+3
+Problem 2. Linear Feedback Shift Register
+A shift register is an array of bits that supports a shift operation which moves every bit one
+slot to the left. For example, below is an example of a shift register initially containing the seed
+'10101111'. It is shifted twice. Each time it is shifted, the most significant bit is dropped, every
+other bit is moved one place to the left, and the least significant bit is replaced with a. Notice
+that after it is shifted 8 times, the shift register will be all zeros.
+Note : In the usual convention, the most significant bit is written as the leftmost bit.
+A linear feedback shift register is a special type of shift register that, instead of setting the least
+significant bit to zero, updates the least significant bit with some linear function of the other bits.
+That is, when a shift operation occurs, it feeds back some information into the least significant bit.
+We will build a linear feedback shift register based on the exclusive-or (XOR) function. (In Java,
+(a^b) calculates the XOR of a and b.)
+Our linear feedback shift register takes two parameters: a size and a tap. The size refers to the
+number of bits. The tap refers to one of the bits and must be between 0 and size−1 (inclusive).
+size specifies number of bits the register should be dealing with and tap specifies which bit (starting
+from the least significant bit) is going to used in the XOR operation.
+Every time a shift operation occurs, the following four things happen: (1) The feedback bit is
+calculated as the XOR of the most significant bit and the tap bit. (2) The most significant bit
+is dropped. (3) Every bit is moved one slot to the left. (4) The least significant bit is set to the
+feedback bit.
+Here are two examples of a linear feedback shift register in action. In both cases, the size is 8
+and the tap is 4 (which is the 5th least significant bit. e.g. If the tap was 0, then we would XOR
+with least significant bit).
+4
+Download code.zip. Inside, you should find the relevant files that you would require to complete
+the following tasks. Open the folder using IntelliJ and configure Project SDK to be Java version
+11.0.5.
+Problem 2.a. Implement a linear feedback shift register called ShiftRegister that implements
+the ILFShiftRegister interface:
+public interface ILFShiftRegister {
+public void setSeed(int[] seed);
+public int shift();
+public int generate(int k);
+}
+The interface requires that the following methods be supported:
+void setSeed(int[] seed): sets the shift register to the specified initial seed. The initial
+seed is specified as an array of 0s (represented as integers). If the seed contains any
+other value, that is an error. (Recall that the seed is the initial set of bits stored in the shift
+register.)
+IMPORTANT NOTE : The given input array seed will be such that the least significant
+bit is on index 0 of the integer array. For example, if the actual seed is 00101, then it will be
+given as {1, 0, 1, 0, 0} in the program.
+int shift(): executes one shift step and returns the least significant bit of the resulting
+register.
+int generate(int k): extracts k bits from the shift register. It executes the shift operation
+k times, saving the k bits returned. It then converts these k bits from binary into an integer.
+For example: if generate is called with a value of 3, then it calls shift 3 times. If the shift
+operations return 1 and then 1 and then 0, then generate returns the value 6 (i.e., '110' in
+binary).
+5
+Your implementation should also support the following constructor:
+ShiftRegister(int size, int tap)
+This constructor initializes the shift register with its size and with the appropriate tap. Submit
+your implementation.
+Problem 2.b. Test your code with a variety of test cases. Make sure to test the corner cases
+(e.g., when the shift-register has size 1, etc.). Here are two sample test cases to use. The first tests
+the shift functionality, while the second tests the generate functionality.
+Test 1: seed =, tap = 7
+int[] array = new int[] {0,1,0,1,1,1,1,0,1};
+ShiftRegister shifter = new ShiftRegister(9,7);
+shifter.setSeed(array);
+for (int i=0; i<10; i++){
+int j = shifter.shift();
+System.out.print(j);
+}
+This code should produce the following output:
+1100011110
+Test 2: seed =, tap = 7
+int[] array = new int[] {0,1,0,1,1,1,1,0,1};
+ShiftRegister shifter = new ShiftRegister(9,7);
+shifter.setSeed(array);
+for (int i=0; i<10; i++){
+int j = shifter.generate(3);
+System.out.println(j);
+}
+6
+This code should produce the following output:
+6
+1
+7
+2
+2
+1
+6
+6
+2
+3
+Now test your code using the provided 'JUnit test.' (These are a subset of the tests that the
+tutors will use when evaluating your code.) Load the file ShiftRegisterTest.java in IntelliJ, and
+update the method getRegister to use your shift register implementation. Then run the tests
+by clicking the button beside line number 10 or using keyboard shortcuts (Ctrl+Shift+R for Mac
+and Ctrl+Shift+F10 for Windows). Other useful keyboard shortcuts can be found in this reference
+sheet.
+Look at the last test: it is testing what happens when the seed is larger than the specified
+register. Explain what you think a proper response is to this erroneous situation, and what is the
+right way to test this case? (We will cover error handling later in the semester.) Submit your
+answer as in a comment in ShiftRegisterTest.java
+Write some additional JUnit test cases for your code in ShiftRegisterTest.java (you may
+reference the existing test cases in the test class). We expect you to sufficiently test your code.
+You will be expected to test for the two previously mentioned scenarios, along with some other
+scenario, and at least one more corner case.
+Problem 2.c. Think about how you might use a shift register to perform a simple encryption scheme. (Hint: initially, the seed of the shift register should be set to your 'password.') How
+would you encrypt a text file? How would you encrypt an image?
+The two released classes ImageEncode.java and SimpleImage.java implement a simple encryption/decryption scheme using a shift register. You will need to add a couple lines of code
+to ImageEncode.java so that it properly uses your shift register. To decode the picture, use the
+following 'code':
+Tap: 7
+Seed: 0111011001011
+If your shift register works correctly, you should then be able to decode the included mystery
+picture. Who is it a picture of? (The only thing you are required to submit for this part is an
+identification of the decoded picture.)
+Problem 2.d. (Extra, for those who are interested) Think of the output of a linear feedback
+shift register as the sequence of 0s that you get if you call getBit() after each shift. A
+7
+linear feedback shift register is only useful for encryption if the resulting output sequence does not
+repeat very often. Experiment with how many times a shift register has to be shifted in order to
+cause the output pattern to repeat. Are all taps equally good?
+Also, notice that a short binary password will not provide very good security. Optionally write
+a modified version that takes a text string (such as, 'TheCowJumpedOverTheMoon') and converts
+it to a (long) binary string to use as a seed for a shift register.
+Another use of linear feedback shift registers is to generate pseudorandom numbers. One basic
+property of a pseudorandom number generator is that it outputs roughly the same number of 0's
+as 1's. Is that true of your linear feedback shift register?
+This is an open ended question, feel free to submit anything that you think is appropriate with
+the relevant explanations.
+Hints for question 2:
+Do I need to comment my code? Yes. Be sure to write a comment explaining: the purpose of each
+class instance variable, and the purpose/workings of each method. You should also explain any
+critical steps in your code.
+What data structure should I use to store the current value of the shift register? One of the advantages of encapsulation is that you can store the value of the register in any way that you want. For
+simplicity, we recommend that you use an array of integers (as is passed to setSeed). However,
+if you want to optimize the running time of the shift operation, there are better more efficient
+solutions. Implement the best solution you can!
+For generate, how do I convert the bits produced by shift into an integer? Begin with a variable
+v set to zero. Every time you get a new bit from shift, multiply v by two, and add the new bit
+(either 0 or 1). The final result will be the integer representation of the bits.
+How do I create a variable to store the array of integers in the register when I don't know its size?
+Declare it simple as an array of integers: int[] intArray. Then, initialize it in the constructor
+once you have learned the correct size.
+For Test 2, my first call to generate produces the value 3 instead of the value 6. You are interpreting
+the bits in the wrong order. Notice that the binary string is 3.
+I get an ArrayOutOfBounds error (or a NullPointerException). Did you remember to initialize all
+your class instance variables?
+When I try to run ShiftRegisterTest, it does not execute properly. Perhaps it asks if you want
+to run an Ant build? Perhaps it asks something else strange. Make sure that you have the JUnit
+package properly installed by adding a new JUnit test to your project. (You can do this under
+File→New→JUnit test.) This ensures that IntelliJ is properly set up to run tests. Alternatively,
+you can check that the libraries are there. Go to Project→Properties, then look in the section Java
+Build Path→Libraries. You should see two entries: JRE and JUnit. If JUnit is not there, click add
+8
+library and choose JUnit.
+I am getting an error that says that each interface/class must be defined in its own file. Yes. In
+Java, each interface or class has to be in its own file, and the name of the file should match the
+name of the class (with the addition of the .java extension.)
+Where should I put the mystery file? Put it in the folder that contains the src folder, i.e., the
+project's root folder.
+I placed the mystery file in the src folder but the output is a blank window. What do I do? In the
+main function of Main.java, use the full path to the mystery file instead, i.e. /path/to/mystery.bmp
+instead of mystery.bmp
+How should I debug my program, when I cannot see the internal state of my object? Wouldn't it
+be nice if you could just type System.out.println(shifter) and have it print out the value of
+the shift register? In fact, you can if you implement:
+public String toString()
+This method should convert the value of the register into a string and return it. Then, you can
+modify your test code to include:
+System.out.println(shifter + " " + j);
+and you will get the following output for the first test:
+011110101 1
+111101011 1
+111010110 0
+110101100 0
+101011000 0
+010110001 1
+101100011 1
+011000111 1
+110001111 1
+100011110 0
+9
+CS2040S: Data Structures and Algorithms
+ problem set 0 Overview. This problem set consists of two problems closely connected to binary search.
+The first is an easy optimization problem: you are given an array, and your goal is to find the
+largest element in the array.
+The second is a more challenging load balancing problem: you have a collection of tasks and a
+collection of processors, and your goal is to efficiently assign a sequence of tasks to each processor.
+Collaboration Policy. You are encouraged to work with other students on solving these problems. However, you must write up your solution by yourself. We may, randomly, ask you
+questions about your solution, and if you cannot answer them, we will assume you have cheated. In
+addition, when you write up your solution, you must list the names of every collaborator, that is,
+every other person that you talked to about the problem (even if you only discussed it briefly). You
+can do so in Coursemology by adding a Comment. Any deviation from this policy will be considered
+cheating, and will be punished severely, including referral to the NUS Board of Discipline.
+1
+Problem 1. Optimization
+Here's a simple problem find the maximum element in an array! Implement the following function:
+public static int searchMax(int[] dataArray)
+Given an array dataArray where every element is unique, return the value of the largest integer in
+the array.
+There is one additional piece of information you need: the data in the array increases (or decreases)
+from one end until it reaches its maximum (or minimum), and then decreases (or increases) until
+it reaches the other end.
+More precisely, if the data array has size n, there is some index j such that the subarray dataArray[0..j]
+is sorted (either increasing or decreasing) and the subarray dataArray[j..n-1] is sorted (either
+increasing or decreasing).
+For example, the following are possible input arrays:
+[2, 5, 7, 9, 15, 23, 8, 6]
+[73, 42, 13, 5, -17, -324]
+[100, 42, 17, 3, 8, 92, 234]
+Use the most efficient algorithm you can. State the running time of your algorithm.
+To think about (Optional):
+1. What is the best way to signal an error, e.g., if the data array is empty?
+2. What if all the elements in the array are not unique? How efficiently can the problem be
+solved then? What is the worst-case example?
+3. This array changes direction once. What if it changes direction twice? Is the problem much
+harder?
+4. What if the array contains noisy data, so some of the entries in the array had +1 or −1 noise
+randomly added/subtracted from their initial value (with probability 1/2 in each direction).
+Can you solve the problem in that case? What would the expected running time be?
+2
+Problem 2. Balancing the Load
+Your boss, Paul R. Allel, storms into the office, shouting, 'The system is too slow! Our users are
+sending me hate-tweets! Make it faster!' And then he stormed out again. What is he upset about?
+Well, right now, every day, your system churns through calculating dense matrix inverses for secret
+government agencies. And recently, there is so much work that one server just can't keep up. So
+you decide to parallelize: by buying more servers, you should be able to perform the computation
+faster!
+Today, you have m jobs, stored sequentially on disk, in order. Each job has a size: jobSize[i] is
+the size of job i.
+You have p processors that can perform these jobs. Each processor can be assigned a consecutive
+sequence of jobs, i.e., processor 2 might be assigned jobs [4, 5, 6, 7]. (For efficiency reasons1
+, we do
+not wants gaps: it would not be legal to assign processor 2 the jobs [4, 5, 7, 8].) Here, for example,
+we have 10 tasks assigned to three processors:
+0 1 2 3 4 5 6 7 8 9
+p1 p2 p3
+The total load of a processor is the sum of the job sizes, e.g., in the above case the load of processor
+2 is:
+jobSize[4] + jobSize[5] + jobSize[6] + jobSize[7]
+Your goal in this problem is to find an assignment of jobs to processors in a manner that minimizes
+the maximum load on any processor (that is, consider the processor with the highest load   we
+want the load on this processor to be as small as possible). In fact, for today, we will just compute
+the minimum possible load.
+Problem 2.a. The first step is to figure out, given a specific target load, whether p processors
+is sufficient. Design and implement the most efficient algorithm you can think of for the following
+function:
+static boolean feasibleLoad(int jobSize[], int queryLoad, int p)
+Your function should return true if it is possible to schedule the jobs on p processors in such a way
+that no processor has more load than queryLoad. State the running time of your algorithm.
+This is obviously an artificial constraint that we have added to make the problem tractable. See part (c), below.
+3
+Problem 2.b. The second step is to determine the minimum achievable load. Suppose we have
+5 processors and jobs with the following sizes:
+[1, 3, 5, 7, 9, 11, 10, 8, 6, 4]
+To ensure that the maximum load on any one processor is as small as possible, we can assign the
+jobs to the 5 processors this way:
+[1, 3, 5, 7] [9] [11] [10] [8, 6, 4]
+Notice that the maximum load on any processor is 18   that's the load on the last processor. With
+only 5 processors, this is the minimum achievable maximum load on any one processor, we can't
+go lower than this!
+Design and implement the most efficient algorithm you can think of for the following function:
+static int findLoad(int jobSize[], int p)
+The function should return the minimum possible load for the given jobSize and p. State the
+running time of your algorithm.
+Problem 2.c. Optional, theory. In fact, the constraint that each processor can only handle
+a consecutive set of jobs simplifies the problem, but in many practical systems is not necessary.
+Unfortunately, even for p = 2, the problem is NP-hard if you allow an arbitrary assignment of
+jobs to processors. However, there is a very simple algorithm that guarantees that no processor is
+assigned more than twice the minimum possible load. (That is, it computes a 2-approximation of
+optimal.) Give a simple algorithm that guarantees a 2-approximation, and prove that it is correct.
+Hint 1: Think about a greedy algorithm that assigns each job to the least loaded processor.
+Hint 2: Notice two facts about the 'optimal' solution: its maximum load has to be at least as big
+as the biggest individual job, and its maximum load has to be at least as big as the sum of the job
+sizes divided by p.
+4
+CS2040S: Data Structures and Algorithms
+ problem set 0 Due: Thursday, February 6, 11:59pm
+Collaboration Policy. You are encouraged to work with other students on solving these problems. However, you must write up your solution by yourself. We may, randomly, ask you
+questions about your solution, and if you cannot answer them, we will assume you have cheated.
+In addition, when you write up your solution, you must list the names of every collaborator, that
+is, every other person that you talked to about the problem (even if you only discussed it briefly).
+Any deviation from this policy will be considered cheating, and will be punished severely, including
+referral to the NUS Board of Discipline.
+Problem 3. (The CS2040S Detectives)
+We have six impostors on ours hands. Each claims to be Mr. QuickSort, the most popular sorting
+algorithm around. Only one of these six is telling the truth. Four of the others are just harmless
+imitators, Mr. BubbleSort, Ms. SelectionSort, Mr. InsertionSort, and Ms. MergeSort.
+Beware, however, one of the impostors is not a sorting algorithm: Dr. Evil maliciously returns
+unsorted arrays! And he won't be easy to catch. He will try to trick you by often returning correctly
+sorted arrays. Especially on easy instances, he's not going to slip up.
+Your job is to investigate, and identify who is who and what is what. Attached to this problem set, you will find six sorting implementations: (i) SorterA.class, (ii) SorterB.class, (iii)
+SorterC.class, (iv) SorterD.class, (v) SorterE.class, and (vi) SorterF.class. These are provided in a single JAR file: Sorters.jar. Each of these class files contains a class that implements
+the ISort interface which supports the following method:
+public void sort(KeyValuePair[] array)
+You can find the code for the KeyValuePair class attached as well: it is a simple container that
+holds two integers: a key and a value. The sort routines will sort the array of objects by key.
+You can test these sorting routines in the normal way: create an array, create a sorter object, and
+sort. See the example file SortTestExample.java.
+You can then use the StopWatch to measure how fast each of these sorting routines runs. Each
+sorting algorithm has some inputs on which it is fast, and some inputs on which it is slow. Some
+sorting algorithms are stable, and others are not. Using these properties, you can figure out who
+is who, and identify Dr. Evil.
+Beware, however, that these characters can be deceptive. While they cannot hide their asymptotic
+running time, they may well choose to run consistently slower than you expect. (You should not
+assume that QuickSort is always the fastest, for example. You should only rely on relative speed,
+not absolute speed.)
+IntelliJ tips: The first thing you will need to do is to import the class files into your project in
+IntelliJ.
+Put the ISort.java file in the src folder.
+Put the Sorters.jar file in the src folder.
+Right click on the .jar file and click \Add as Library."
+Problem 3.a. Write a routine boolean checkSort(ISort sorter, int size) that runs a test
+on an array of the specified size to determine if the specified sorting algorithm sorts correctly.
+Problem 3.b. Write a routine boolean isStable(ISort sorter, int size) that runs a test
+on an array of the specified size to determine if the specified sorting algorithm is stable.
+Problem 3.c. Write whatever additional code you need in order to test the sorters to determine
+which is which. All evidence you give below you rely on properties of the sorting algorithms, along
+with data from your tests that supports your claim.
+Problem 3.d. What is the true identity of SorterA? Give the evidence that proves your claim.
+Problem 3.e. What is the true identity of SorterB? Give the evidence that proves your claim.
+Problem 3.f. What is the true identity of SorterC? Give the evidence that proves your claim.
+Problem 3.g. What is the true identity of SorterD? Give the evidence that proves your claim.
+Problem 3.h. What is the true identity of SorterE? Give the evidence that proves your claim.
+Problem 3.i. What is the true identity of SorterF? Give the evidence that proves your claim.
+3
+CS2040S: Data Structures and Algorithms
+ problem set 0 Due: TBA
+Collaboration Policy. You are encouraged to work with other students on solving these problems. However, you must write up your solution by yourself. We may, randomly, ask you
+questions about your solution, and if you cannot answer them, we will assume you have cheated.
+In addition, when you write up your solution, you must list the names of every collaborator, that
+is, every other person that you talked to about the problem (even if you only discussed it briefly).
+You can do so by leaving a comment at the start of your .java file. Any deviation from this policy
+will be considered cheating, and will be punished severely, including referral to the NUS Board of
+Discipline.
+1
+Problem 4. (Make it Smaller)
+The goal of this problem is compression: take a file and make it smaller. We will take every byte
+of the input file and re-encode it so that the entire file is smaller.
+By default, each ASCII character is stored using 8-bits. But this is quite inefficient: some characters
+(like) appear much more frequently. Others appear much less commonly. We could save space
+by encoding an in the document. To be
+more precise, imagine a document has W characters in it, and character ci appears wi times in the
+document. Then the ideal thing to do is store character ci using log(W/wi) bits.1
+In this problem, we will use a binary tree to generate the codewords.
+Each leaf in the tree will represent a symbol in the input file. The codeword is found by looking at
+the path from the root to the leaf containing the symbol: start at the root, and every time you go
+left, add a to the codeword. When you reach
+the leaf, return the codeword itself.
+A key property of this type of code is that they are prefix-free codes: if c is the codeword for some
+symbol, then c is not a prefix for any other symbol (e.g. {00, 01} is prefix-free but {00, 001} is not
+prefix-free because 00 is a codeword and a prefix of 001). This is very useful because it means that
+The reason why that is optimal is related to the idea of entropy.
+2
+if we ever see the codeword c, we know exactly how to decode it (without worrying that it is part
+of some longer codeword).
+In this problem, we will provide you with most of the mechanism for encoding and decoding files.
+The only part you have to do is the part related to tree manipulation: build the tree, and implement
+two query methods: one that translates symbols to codewords, and one that translates codewords
+to symbols.
+There are two versions of this problem: the easy version and the harder version. You are required
+to do one of them (and a small bonus for doing the harder one).
+In the easier version, you can ignore the frequency with which each symbol appears. In this
+case, you only have to build a balanced tree. However, the compression performance will not
+be as good, since you are not getting any benefit from prioritizing repeated characters.
+In the harder version, you will weight the tree according to the frequency that each items
+shows up. This will get you close to an optimal encoding.
+The easier version should be implemented in the UniformTree class, while the harder version should
+be implemented in the WeightedTree class.
+Problem 4.a. Your first task is to implement the buildTree routine. In both cases the goal is
+to build a tree where all the symbols are stored at the leaves (i.e., the internal nodes do not contain
+any symbols, just guides for searching). The tree should be in BST-order.
+It is important that the symbols are at the leaves, since that ensures that no codeword is a prefix
+of another codeword!
+Easier version. The buildTree method is called in the constructor. An array of bytes is passed
+in, each representing a unique symbol in the input file. When the buildTree routine finishes,
+the member variable root should be the root of a balanced binary tree. The tree should be in
+BST-order (with respect to the symbols) so that we can search the tree for a symbol efficiently. We
+have included a TreeNode class as part of the UniformNode class; you may want to look at that.
+(You should not need to modify it.)
+You can assume that there is 2n unique characters, making it possible to build a full binary search
+tree.
+Try to make your tree construction algorithm as efficient as possible, e.g., linear time.
+Harder version. In this case, the buildTree method takes as input an array of pairs: the
+symbols and their weight (i.e., the number of times it appears in the input document). Again, you
+want to build a tree that is in BST-order, so that it can be efficiently searched. The Pair type
+supports the Comparable interface, so you can sort it using system sort (java.utils.Arrays.sort)
+and it will sort by the symbol.
+3
+However, now the tree should be weight-balanced rather than simply balanced: the sum of the
+weight on the left side should be about equal to the sum of the weight on the right side.
+Of course, exact balance cannot always be achieved because weights are discrete. Thus the goal is
+as follows: if W is the weight of some tree node v, ensure that neither the weight of v's left child
+nor that of v's right child exceeds 2W/3.
+There is one exception to this rule: if there is one item x that is of size at least W/3 all by itself,
+then the side containing that item may have more than 2W/3 weight. However, at the very next
+level of the tree, x should become a leaf.
+In the above example, the node on the right is a weight ratio that is more than 2W/3, and is a
+intermediate node, so it is not allowed. However, in the second example, although the weight is 0.1
+and 0.4, this is acceptable because the 0.4 is a single node on its own.
+If you do the construction properly, an item with weight wi should be at a leaf of depth O(log(W/wi)),
+(i.e., an optimal depth), where W is the total weight of the tree,
+Try to make your tree construction algorithm as efficient as possible, e.g., O(n log n) time.
+Problem 4.b. Your second task is to implement a query to find a codeword. The queryCode
+method takes a key as an input (in the form of a byte) and returns the codeword, in the form of a
+boolean array. (We will think of the codeword as a boolean array because we will write it to the
+file as a sequence of bits.)
+You should be able to implement this by walking the tree from the root to the leaf of the appropriate
+symbol. If the symbol is not found at a leaf, then return null.
+For the codeword returned, if code is the boolean array, then code[0] should be the first bit of
+the codeword (i.e., the step taken from the root), while code[1] should be the second bit of the
+codeword, etc.
+Implement the query in an efficient manner.
+4
+Problem 4.c. Your third task is to implement a query to find a symbol, given a codeword.
+The query method takes a boolean array code and an integer bits as an input. The method
+will then output a key (in the form of a byte). The code array is only valid in the range from
+code[0..bits-1]. (The rest of the array is declared in advance to act as a buffer, since we do not
+know how big the codeword will be in advance.)
+The goal, then, is to lookup the codeword code[0..bits-1] in the tree and if the result is a leaf,
+return the symbol found. Otherwise, return null.
+For the codeword, if code is the boolean array, then code[0] should be the first bit of the codeword
+(i.e., the step taken from the root), while code[1] should be the second bit of the codeword, etc.
+Implement the query in an efficient manner.
+Once you have implemented the above three methods, the compressor and decompressor classes
+should work. Simply update the input and output files in the main routine of each of them and you
+should be able to compress and decompress accordingly. How good a compression rate do you get?
+(For text files with 8-bit ASCII text, I would expect you can save at least 3 bits per character.)
+Problem 4.d. (Optional.) You can get better compression by being a little more clever. There
+are several things you might try. A natural thing to try is to build a Huffman Tree. How much
+better performance do you get? Another idea is that you might do better in text documents if you
+looked at words instead of characters: what if you map each word in the text to a leaf in the tree?
+Do you get better compression? What is the best compression you can get for, say, Hamlet?
+5
+CS2040S: Data Structures and Algorithms
+ problem set 0 Due: Monday, March 2, 11:59pm
+Collaboration Policy. You are encouraged to work with other students on solving these problems. However, you must write up your solution by yourself. We may, randomly, ask you
+questions about your solution, and if you cannot answer them, we will assume you have cheated.
+In addition, when you write up your solution, you must list the names of every collaborator, that
+is, every other person that you talked to about the problem (even if you only discussed it briefly).
+You can do so by leaving a comment at the start of your .java file. Any deviation from this policy
+will be considered cheating, and will be punished severely, including referral to the NUS Board of
+Discipline.
+Problem 5. (Autocomplete)
+The goal of this problem is to build a data structure to support searching a dictionary. For example,
+you might want to build an autocomplete routine, i.e., something that (as you type) will list all the
+possible completions of your term. Or perhaps you want to be able to search a dictionary based
+on a search pattern?
+The Trie Data Structure
+The main data structure you will build is called trie, which is specially designed for storing strings.
+(It is also commonly used to store IP addresses, which are just binary strings, and trie data
+structures are used in routers everywhere to solve the \longest prefix" problem that is used to
+determine the next hop in a network route.)
+A trie is simply a tree where each node stores one letter or a string. A trie, however, is not a
+binary tree: each node can have one outgoing edge for each letter in the alphabet. Hence, if a trie
+supports all 256 possible ASCII characters, each of its nodes can have 256 children!
+To simplify things for this assignment, our trie will only support alphanumeric characters.
+Here's a picture of a trie node (for simplicity, this is a trie that stores only lowercase letters):
+Each root-to-leaf path in a trie represents a single string. And when two strings share a prefix, they
+will overlap in the trie! Here's a picture of a trie that contains a collection of overlapping strings:
+By following the edges, you can verify that this trie contains all of the following strings: f\peter",
+\piper", \picked", \a", \peck", \of", \pickled", \peppers"g.
+Notice that two words in a trie might completely overlap. For example, you could have both the
+words \pick" and \picked" in your trie. To indicate that \pick" is also a valid word, we can add
+an additional special flag to indicate that a node represents the last letter in some string. In the
+image above, we use the red flag to denote the end of string.
+Search. Searching a trie for a string s is simply a matter of starting at the root, and iterating
+through the string one character at a time. For each character in s, follow the child node indicated
+by the character. If there is no such child node, then the string is not in the tree. When you get
+to the end of s, and if the last node has the special flag indicating the end of a word, then s is in
+the tree!
+Insert. To insert a string into a trie, do the same thing as a search. Now, however, when you
+find a node in the trie where you cannot keep following the string (because the indicated character
+leads to a non-existent child), then you create nodes representing the rest of the string.
+Implementation hints: When you implement a trie, it is useful to have a TrieNode class to contain
+the information stored at a node in the trie. In a binary tree, your node class would have a left
+and a right child. Here, you will need an array of children, one per possible child. For simplicity,
+you are encouraged to just use a fixed size array with one entry for each of the possible children.
+(Recall: we know exactly how many children a trie node can potentially have!) There are more
+efficient solutions, but we can ignore them for now.
+Your trie class will manipulate Java strings that use alphanumeric characters. One useful method
+that a string supports is charAt(j) which returns the j'th character of the string. For example, if
+we have previously declared String name = Iphigenia, then name.charAt(2) will return .
+Additionally, recall that characters are internally represented as integers. The table below shows
+each character and their corresponding ASCII value.
+Character Integer Value Character Integer Value Character Integer Value
+0 48 A 65 a 97
+1 49 B 66 b 98
+... ... ... ... ... ...
+9 57 Z 90 z 122
+Problem 5.a. Implement the trie data structure.
+By editing Trie.java, implement a trie data structure based on the description given above.
+In addition, you should also implement the following functions on the trie:
+void insert(String s)
+Inserts a string into the trie data structure.
+boolean contains(String s)
+Returns true if the specified string is inside the trie data structure, false otherwise.
+Pattern Matching
+Once you have a dictionary, you want to be able to search it! And you really want to be able to
+search it using some sort of \search pattern" so you can find words that you do not already know.
+For example, you might want to know all the words in the dictionary that begin with the substring
+\beho", for example.
+One very common way to specify such search patterns is with regular expressions (or people usually
+just call it regex). Regular expressions are a powerful way of expressing a search. (In fact, they allow
+you to search for any pattern specified by a finite automaton!) We will not implement complete
+regular expression searching here, but we will use a small subset of the regular expression language: a period can match any character. For example, the string would match the words:
+and. a star modifies the preceding character, which can be repeated zero or more times. For
+example, the string, etc. a plus modifies the preceding character, which can be repeated one or more times. For
+example, the string, etc. It
+would not match. a question mark modifies the preceding character, which can appear either zero or one
+time. For example, the string (but
+nothing else).
+For the purpose of our string matching algorithm, we also want to support followed by one or
+more special characters.
+A  characters. For example:
+ This matches exactly two arbitrary characters. For example, the string would match
+but not or ‘abcbd‘.
+ This matches exactly three arbitrary characters. For example, the string would
+match.
+A  can also be followed by at most one other special character before encountering another
+alphanumeric character in the string. For example: This matches an arbitrary number (zero or more) of arbitrary characters. For example
+the string. This matches an arbitrary number (one or more) of arbitrary characters. For example,
+the string . This matches zero or one arbitrary character. For example, the string would
+match the strings.
+We will also not support other combinations of special characters (what would mean?). We
+will not support any other regular expression features.
+How to search? A trie is a great data structure for searching for a pattern. For example, imagine
+if you want to search for all strings with prefix. Then you can simply walk down the trie until
+you find the node at the path and recursively print out every string in the remaining subtree!
+Similarly, if you want to match the pattern. Then,
+you follow all the outgoing edges from that node, i.e., recursing on strings with prefix,
+ etc. Then, from each of those nodes, you follow the outgoing edge to .
+Also, for pattern,
+.
+In general, at every step in the tree, you can continue your pattern search recursively at one or more
+children, using a (possibly modified) version of the string pattern that you are currently searching
+for.
+Beware. The hardest cases probably are combining two special characters, e.g.,, where
+you may have to recurse on a lot of characters at a lot of levels!
+This Problem, similar to PS4, has easy and hard versions. We will only take the maximum between
+your score for 5.b (max 15 points) and 5.c (max 25 points). For both versions, you are encouraged
+to implement a solution with linear running time in terms of the number of entries returned to get
+full marks.
+Problem 5.b. (Easier) Implement prefix search for the trie data structure.
+You have to complete the implementation for the following function:
+prefixSearch(String s, ArrayList<String> results, int limit).
+This should return all the strings in the trie with prefix matching the given pattern s and sorted
+in ASCII order. If there are more entries than the limit, then it should just stop and return
+the first limit entries. The entries should be put in the results.
+Your implementation only needs to handle the  special character in the pattern (although there
+can be an arbitrary number of them, and not necessarily contiguous).
+Problem 5.c. (Harder) Implement pattern search for the trie data structure.
+You have to complete the implementation for the following function:
+patternSearch(String s, ArrayList<String> results, int limit).
+This should return all the strings in the trie that exactly match the pattern s, up to the limit.
+If there are more entries than the limit, then it should just stop and return that many entries.
+The entries should be put in the results. In this case, although it is preferred if your output is in
+ASCII order, it is not required. Hence, if the number of possible entries is bigger than the limit,
+you may output any subset with size equal to the limit.
+Your implementation needs to support all the special characters and their combinations as stated
+on the previous page. For testing purposes, each string will only match the pattern in (at
+most) one way.
+Scoring for this problem is also affected by the number of possible patterns that you manage to
+handle. Hence, you may still get good marks even if you cannot handle everything and pass all the
+private test cases.
+Autocomplete. If you implement your trie properly, you can test it using the Autocomplete
+application. If loads a large dictionary of English words. (To test it out, you might want to use
+a smaller list of words.) Then, as you type, it lists all the words that have a prefix that matches
+your pattern so far. When you hit \enter" it shows exactly the words that match your pattern.
+ArrayList. ArrayList<String> is the Java implementation of a resizable array for strings.
+The angle brackets specify that the array only supports String entries. (This is related to Java
+generics, which you can ignore for now.) To insert something into a ArrayList, simply perform
+results.add(myString) to add the element at the end. You can find more documentation for the
+ArrayList in the Java documentation.
+7
+CS2040S: Data Structures and Algorithms
+ problem set 0 Due: Thursday, March 19, 11:59pm
+Collaboration Policy. You are encouraged to work with other students on solving these problems. However, you must write up your solution by yourself. We may, randomly, ask you
+questions about your solution, and if you cannot answer them, we will assume you have cheated.
+In addition, when you write up your solution, you must list the names of every collaborator, that
+is, every other person that you talked to about the problem (even if you only discussed it briefly).
+You can do so by leaving a comment at the start of your .java file. Any deviation from this policy
+will be considered cheating, and will be punished severely, including referral to the NUS Board of
+Discipline.
+1
+Problem 6. (Automatic Writing)
+Writing-intensive modules can be hard: so many 10-page essays, and not nearly enough time to
+catch up on the latest e-lectures (please watch them!). CS2040S is here to help. For this problem
+set, you will develop an automatic writing program that can easily produce pages and pages of new
+text. And it will adapt to your chosen style. If you use an old essay as input, your new essay will
+sound just like it was written by you! If you use Shakespeare as input, your new essay will sound
+as if it was written by the Bard himself.
+The basic idea is to take an input text and calculate its statistical properties. For example, given
+a specific string 'prope', what is the probability that the next letter is an? What is the
+probability that the next letter is a? Your program will take a text as input, calculate this
+statistical information, and then use it to produce a reasonable output text.
+Claude Shannon first suggested this technique in a seminal paper A Mathematical Theory of Communication (1948). This paper contained many revolutionary ideas, but one of them was to use
+a Markov Chain to model the statistical properties of a particular text. Markov Chains are now
+used everywhere; for example, the Google PageRank algorithm is built on ideas related to Markov
+Chains.
+Markov Models
+Given a text, you can build up the Markov Model. A Markov Model captures the frequency of
+a specific letter/character appearing after a specific preceding string (which can be of varying
+length). The order of the Markov model is the length of that preceding string.
+For example, if we have the following text:
+a b d a c a b d a c b d a b d a c d a
+We can build the following Markov Model of order 1:
+a b 1/2
+a c 1/2
+b d 1
+c a 1/3
+c b 1/3
+c d 1/3
+d a 1
+This implies the following:
+After the string.
+2
+After the string.
+After the string (i.e., they are equally
+common after a ).
+After the string.
+You can think of these as probabilities (though so far, there is no randomness at all). Notice that
+in the text above the table, there are three instances when the character, and
+there are three instances when, and
+is always followed by an once.
+A Markov Model of order 2 captures how likely a given letter is to follow a string of length 2.
+Suppose we have the following text:
+a b c d a b d d a b c d d a b d
+Here we have an example of Markov Model of order 2 built by the text above:
+ab c 1/2
+ab d 1/2
+bc d 1
+bd d 1
+cd a 1/2
+cd d 1/2
+da b 1
+dd a 1
+Notice that in the text above, there are two instances when the string  is followed by the letter
+is followed by the letter, you
+always get the letter, etc.
+Producing a New Text
+Once you have your Markov Model, you can go about generating a new text. You need to start
+with a seed string of the same length as the order of the Markov Model. For example, if the Markov
+Model is of order 6, you need to start with a string of length 6.
+We use the term  to refer to the k-character strings, where k is the order. In
+order to generate the next character, you look back at the previous k characters (inclusive of the
+current last character). Look up that kgram in your Markov Model, and find the frequency that
+each character appears after that kgram. If the kgram never appeared in your Markov Model, then
+your newly-generated text is completed. Otherwise, you randomly choose the next character based
+on the probability distribution indicated by the Markov Model.
+3
+Once you have found the next character that way, you add it to the end of your string, and repeat
+the process as many times as you want!
+Problem Details
+For this problem, you have been provided with the TextGenerator Java class, more information
+will be provided in the section below. You will submit one Java class: MarkovModel.
+Problem 6.a. Implement only the following 4 methods:
+MarkovModel(int order, long seed): Constructs a Markov Model of the specified order.
+You can assume that the order will be at least 1. The seed should be used to initialize the
+pseudorandom number generator that your class will use (the template code already does
+this). A pseudorandom number generator's number sequence is completely determined by
+the seed. So, if a pseudorandom number generator is reinitialized with the same seed, it will
+produce the same sequence of numbers.
+void initializeText(String text): This builds your Markov Model based on the specified
+text. When this routine is complete, your class would have computed the table that maps
+each kgram to the frequency that each ASCII character follows that kgram (where k is the
+order of the Markov Model).
+int getFrequency(String kgram): Returns the number of times the specified string kgram
+appears in the input text. The behaviour of this method is only defined if the length of
+the kgram is equal to the order of the Markov Model. This should return a number zero or
+greater. For example, in the Figure 1 below, the frequency of kgram  is 1. (Notice we do
+not count the kgram which appears at the end of the text, where nothing may follow it)
+int getFrequency(String kgram, char c): Returns the number of times the specified
+character c appears immediately after the string kgram in the input text. The behaviour of
+this method is only defined if the length of the kgram is equal to the order of the Markov
+Model. For example, in the Figure 1 below, the frequency of  appearing after the kgram
+ is 4. If the string kgram never appears in the original text, then you should return 0.
+Problem 6.b. Next, implement the nextCharacter method:
+char nextCharacter(String kgram): Returns a random character chosen according to the
+Markov Model. The probability of a character should be equal to getFrequency(kgram,c)
+getFrequency(kgram) .
+That is, the probability of character follows the
+string kgram in the text. If there is no possible next character (e.g., because the kgram does
+not appear in the text, or only appears at the very end of the text), then return the specially
+4
+defined token final char NOCHARACTER = 0 (defined in the template file). The kgram must
+be the length specified by the order of the Markov model. To generate the random choice,
+you must use the pseudorandom number generator with the specified seed. You must use
+the process described in 'Random character generation' below to generate the
+random choice.
+You may assume that every character in the text is an ASCII character (inclusive of the extended
+ASCII character), except for 0 (the NULL character), which does not count as a character. Figure 1
+has an example of the information computed by your Markov Model for a specific example string.
+frequency probability
+a c g a c g
+aa 1 1 0 0 1 0 0
+ag 4 2 0 2 2/4 0 2/4
+cg 1 1 0 0 1 0 0
+ga 5 1 0 4 1/5 0 4/5
+gc 1 0 0 1 0 0 1
+gg 3 1 1 1 1/3 1/3 1/3
+Figure 1: Markov Model produced by the string gagggagaggcgagaaa.
+Implementation advice
+There are several approaches to designing the MarkovModel class. Here we provide some tips for
+how you might implement it.
+Basic structure.
+There are two standard ways you might store the information about the kgram. You might use a
+symbol table (i.e., a hash table) that maps strings of length k (where k is the order of the Markov
+model) to an array containing 255 integers, one representing each possible ASCII character. The
+array records the number of time each character follows the given string. For example, the character
+is 97, in ASCII. Hence, if k = 2, given an input string, you would add to your hash table an
+entry with the key equal to and the value equal to an array of integers where value[97] == 1.
+Alternatively, you might use a symbol table that maps strings of length k to another symbol table;
+the second symbol table maps ASCII characters to integers. Again, these integers represent the
+frequency that a given character follows the initial string. You may also use an alternate solution,
+as long as it efficiently supports the required operations.
+For the purposes of this Problem Set, you should use a Hash Table and NOT use Tries or
+TreeSet or TreeMap to store information about the kgram. If you are unsure whether you can
+use a particular data structure, please post in the forums to seek clarifications.
+5
+Random character generation
+Presumably you have now built your Markov Model, and now know the proper frequencies that
+each character is followed by each kgram. In order to generate the next character in the text, you
+need to make a random choice. For testing purposes, you must use the random number generator
+specified in the template code: java.util.Random, and you must use the seed specified in the
+constructor (via a setSeed call on the random number generator object which is already in the
+template code). If you run the same test twice with the same seed, you will get the same answer!
+This is very useful for testing.
+A second requirement (for testing purposes) is that you choose the next character randomly in the
+following way. Here is an example. Imagine that for the given kgram, there are four characters that
+might follow it: (all the other characters appear zero times after this kgram). The
+appears 2 times, the appears 1 time.
+Thus this particular kgram appears 11 times (not counting the end of the text, where nothing may
+follow it).
+To choose a random character, you first select a random integer from [0, 10], i.e., a range containing
+11 integers. You can do this by calling generator.nextInt(11). You can then partition this range
+of random numbers:
+if you get {0, 1} then you return ;
+if you get {2, 3, 4, 5, 6}, then you return ;
+if you get {7, 8, 9}, then you return;
+if you get {10}, then you return.
+You must process the possible letters in alphabetic order (or by order of their ASCII character
+values).
+In general, if there is a set of C possible next characters which appear a total of N times after the
+k-letter prefix, you should choose a random number from [0, N − 1], and then go through the set
+in alphabetical order to determine which character was chosen by the random selection, weighting
+each character by the number of times it appears.
+The reason we ask you to choose the random character in this way is twofold: first, it is a reasonably
+efficient way to sample from a distribution, and second, it will allow us to ensure that every solution
+produces the same random sequence (which makes it easier to test).
+Other tips
+Here are a few other things that may be useful:
+You can treat an ASCII character either as a char or an int. If you have a char ch, you can
+store it in an integer as follows: int iChar = (int) ch. Similarly, you can do the opposite:
+6
+char newChar = (char) iChar. In general, it is not recommended that you force Java to
+ignore types like this. However, in this case, as long as you are careful to not use any values
+about 255, this is a safe thing to do. (If your integers is bigger than 255 and you put it in
+a char, you may not get what you expect.) This is convenient, for example, if you want to
+enumerate all the ASCII characters using a for loop, since you can just count up to 255.
+A Java HashMap is a parameterized data type. That means that when you create it, you
+have to specify what the key and value types are. For example, if you want to use a key type
+K and a value type V, you would use the class HashMap<K, V>. In your case today, if you
+want a key type of String and a value type of Integer, you use a HashMap<String, Integer>.
+(Whenever you need to use the name of the class, whether to declare the variable or to create
+a new object, you can just use that full name including the String and Integer types.)
+Notice, though, that for your key and value types, you cannot use primitive types like int or
+char. Instead, you have to use the wrapper class version of these types: Integer, Character,
+etc. That is why, above, we used Integer as the value type. You can mostly use int and
+Integer interchangeably and everything just works, with Java automatically converting back
+and forth between the two as needed. (An Integer is just a class that contains inside it an
+int.)
+Once you have declared your hashmap with the key and value types as String and Integer,
+then when you use the put and get methods, they act just like they should, e.g., get takes
+a String as input and returns an Integer as output.
+You might find a variety of the methods in the String class useful. If you have not already,
+look them up in the Java documentation. For example, you can use the charAt method to
+retrieve a particular character in a string; you can use substring(int j) to retrieve the
+suffix of a string (from j onwards), and you can use substring(int i, int j) to retrieve
+the substring between character i (inclusive) and j (exclusive). Do look up the details.
+Text Generator
+We have provided you with a text generator class that you can use with your Markov Model class
+to generate text. The text generator class takes three input parameters, i.e., the main method has
+argument (arg[0], arg[1], arg[2]):
+k, the order of the Markov model;
+n, the number of characters to generate;
+the filename of the text to use as a model. (This file should be in the project root directory,
+above the src folder.)
+You can set the input parameters in IntelliJ under Run → Edit Configurations, where you can
+create a new configuration (of type Application). There you can set the program arguments. For
+example: '3 15 PS6Test.in' as the program arguments.
+7
+The text generator reads in the file as a long text String, creates the MarkovModel, and calls
+initializeString on your Markov Model class using the text.
+It then generates a new text, using the first k characters of the original input text as a seed (and
+as the first k characters of the output text). In more detail, it begins with a String kgram equal
+to the first k letters from your text file. It generates the next character by calling nextCharacter
+on your Markov Model, using the initial kgram as your input string. Then it updates the kgram,
+adding the new character to the end. It continues in this way, at every step using the most recent
+k characters to query the Markov Model for the next character.
+If it ever reaches a point where there is no possible next character, then it stops (outputting a
+string shorter than desired).
+We will test the functionality of your nextCharacter method in Problem 6.b. by making use of
+this TextGenerator class that we have provided for you.
+Optional Experiments
+You may want to experiment with different values of k to determine which values yield reasonable
+sounding texts. If k is too large, then the text output will be identical to the input text. On the
+other hand, if k is too small, then the output text is quite garbled and ungrammatical English.
+There is a small range of k for which the output text both sounds like real English, but also sounds
+like a new and unique text.
+Problem 6.c. (BONUS) Word-based Markov Model:
+You might also experiment with using words instead of characters. For example, instead of looking
+at the probability that character, you could look at the probability
+that the word cat comes after the word yellow (i.e., order 1, where order is defined based on the
+number of words), or the probability that cat comes after the phrase the vicious yellow (i.e., order
+3). If you develop your Markov Model based on words, you might get a more interesting text, as
+long as you begin with a sufficiently long text.
+In order to use words instead of characters, you will have to design your MarkovModel class more
+carefully. You are now not restricted to the same scheme as the Random character generation, and
+you may wish to explore other schemes for random word generation.
+Submit your well-commented MarkovModel class to Coursemology. You are also to upload your
+(potentially) modified TextGenerator class, OR any other class which makes use of your modified
+MarkovModel class to generate text. This is to allow your tutors to test your implementation for
+this problem.
+Note: This bonus problem is an extension to the basic character-based Markov Model. You must
+still submit your basic version, and it must work reasonably well before your submission for
+this word-based Markov Model is considered for bonus marks.
+8
+Creative Competition
+Submit the best, most interesting text that your program produces. Post your best, most creative
+work to the forum (in the specified location). The one(s) with the most upvotes win(s)! You could
+aim for several goals: (i) plausibility (i.e., does it read like a real text), (ii) novelty, and (iii) humor.
+In order to generate an interesting text, you will need to find a good (long) source text. In the
+past, people have used legal documents (e.g., the text of a specific law), Shakespeare, news reports,
+and/or arbitrary texts from Project Gutenberg (gutenberg.org). You may splice together 2-3
+input texts. You may also experiment with modifying the initial kgram. Instead of using the first k
+letters of the text as an initial kgram, you may choose an alternate choice of k characters. (Specify
+whether your entry was generated using characters, as in the assignment, or using words, as in the
+extension, or using something else.)
+On a closing note:
+'Half the fire a funny little man began to stay at heavens.
+said their new emperor.'
+9
